@@ -16,6 +16,12 @@ A console-based, menu-driven system to automate university transport registratio
 - File handling for persistence
 - Dynamic memory management
 
+## File Directory
+./University-Transport-Managment-System
+    /data
+    /src/*.cpp - *.h
+    /README.md
+
 ## How to Run
 ```bash
 g++ src/*.cpp -o transport_system
