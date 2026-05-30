@@ -15,7 +15,7 @@ void FileManager::saveUsers(Student** students, int sCount,
         file << admins[i]->serialize() << "\n";
 
     file.close();
-    cout << "  Users saved.\n";
+    //cout << "  Users saved.\n";
 }
 
 void FileManager::saveVehicles(Vehicle** vehicles, int count,
@@ -25,7 +25,7 @@ void FileManager::saveVehicles(Vehicle** vehicles, int count,
     for (int i = 0; i < count; i++)
         file << vehicles[i]->serialize() << "\n";
     file.close();
-    cout << "  Vehicles saved.\n";
+    //cout << "  Vehicles saved.\n";
 }
 
 void FileManager::saveRoutes(Route** routes, int count,
@@ -35,7 +35,7 @@ void FileManager::saveRoutes(Route** routes, int count,
     for (int i = 0; i < count; i++)
         file << routes[i]->serialize() << "\n";
     file.close();
-    cout << "  Routes saved.\n";
+    //cout << "  Routes saved.\n";
 }
 
 void FileManager::savePasses(TransportPass** passes, int count,
@@ -45,7 +45,7 @@ void FileManager::savePasses(TransportPass** passes, int count,
     for (int i = 0; i < count; i++)
         file << passes[i]->serialize() << "\n";
     file.close();
-    cout << "  Passes saved.\n";
+    //cout << "  Passes saved.\n";
 }
 
 // ==================== LOAD ====================

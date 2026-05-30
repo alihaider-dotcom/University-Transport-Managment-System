@@ -83,7 +83,46 @@ void saveAll() {
     FileManager::saveVehicles(vehicles, vehicleCount);
     FileManager::saveRoutes(routes, routeCount);
     FileManager::savePasses(passes, passCount);
-    cout << "  All data saved successfully.\n";
+    //cout << "  All data saved successfully.\n";
+}
+
+bool isValidEmail(const string& email) {
+    // Check if email contains @ symbol
+    size_t atPos = email.find('@');
+    if (atPos == string::npos || atPos == 0) {
+        return false;
+    }
+    
+    // Check if email contains . after @
+    size_t dotPos = email.find('.', atPos);
+    if (dotPos == string::npos || dotPos == atPos + 1) {
+        return false;
+    }
+    
+    // Check if there is text after the dot
+    if (dotPos == email.length() - 1) {
+        return false;
+    }
+    
+    return true;
+}
+
+bool emailExists(const string& email) {
+    // Check if email already exists in students
+    for (int i = 0; i < studentCount; i++) {
+        if (students[i]->getEmail() == email) {
+            return true;
+        }
+    }
+    
+    // Check if email already exists in admins
+    for (int i = 0; i < adminCount; i++) {
+        if (admins[i]->getEmail() == email) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 // ==================== STUDENT MENU ====================
@@ -95,58 +134,114 @@ void studentMenu(Student* s) {
         cin >> choice;
         cin.ignore();
 
-        if (choice == 1) {
-            // View routes
-            cout << "\n--- Available Routes ---\n";
-            if (routeCount == 0) { cout << "No routes available.\n"; continue; }
-            for (int i = 0; i < routeCount; i++)
-                cout << *routes[i] << "\n";
-
-        } else if (choice == 2) {
-            // Apply for transport
-            if (s->hasPass()) {
-                cout << "You already have a transport pass (ID: " << s->getPassId() << ").\n";
-                continue;
-            }
-            if (routeCount == 0) { cout << "No routes available.\n"; continue; }
-
-            cout << "Enter Route ID: "; string rid; cin >> rid;
-            Route* r = findRoute(rid);
-            if (!r) { cout << "Route not found.\n"; continue; }
-            if (r->getVehicleId().empty()) { cout << "No vehicle assigned to this route.\n"; continue; }
-
-            Vehicle* v = findVehicle(r->getVehicleId());
-            if (!v || v->getAvailableSeats() == 0) {
-                cout << "Vehicle is full. Cannot apply.\n"; continue;
+        switch (choice) {
+            case 1: {
+                // View routes
+                cout << "\n--- Available Routes ---\n";
+                if (routeCount == 0) {
+                    cout << "No routes available.\n";
+                    break;
+                }
+                for (int i = 0; i < routeCount; i++)
+                    cout << *routes[i] << "\n";
+                break;
             }
 
-            string pid = generateId("P", passCount);
-            passes[passCount] = new TransportPass(pid, s->getUserId(), rid,
-                                                  r->getMonthlyFee(),
-                                                  makeDueDate(), currentDate());
-            s->setPassId(pid);
-            passCount++;
-            cout << "Application submitted. Pass ID: " << pid << " (Pending approval)\n";
+            case 2: {
+                // Apply for transport
+                if (s->hasPass()) {
+                    cout << "You already have a transport pass (ID: " << s->getPassId() << ").\n";
+                    break;
+                }
+                if (routeCount == 0) {
+                    cout << "No routes available.\n";
+                    break;
+                }
 
-        } else if (choice == 3) {
-            // View registration
-            if (!s->hasPass()) { cout << "No active transport pass.\n"; continue; }
-            TransportPass* tp = findPass(s->getPassId());
-            if (tp) cout << "\n" << *tp << "\n";
-            else    cout << "Pass not found.\n";
+                cout << "Enter Route ID: ";
+                string rid;
+                getline(cin, rid);
+                
+                // Validate non-empty input
+                if (rid.empty()) {
+                    cout << "Error: Route ID cannot be empty. Please try again.\n";
+                    break;
+                }
+                
+                Route* route = findRoute(rid);
+                
+                if (!route) {
+                    cout << "Route not found.\n";
+                    break;
+                }
+                if (route->getVehicleId().empty()) {
+                    cout << "No vehicle assigned to this route.\n";
+                    break;
+                }
 
-        } else if (choice == 4) {
-            // Cancel registration
-            if (!s->hasPass()) { cout << "No active pass to cancel.\n"; continue; }
-            TransportPass* tp = findPass(s->getPassId());
-            if (!tp) { cout << "Pass not found.\n"; continue; }
-            if (tp->getStatus() == "Approved") {
-                Vehicle* v = findVehicle(findRoute(tp->getRouteId())->getVehicleId());
-                if (v) v->releaseSeat();
+                Vehicle* vehicle = findVehicle(route->getVehicleId());
+                if (!vehicle || vehicle->getAvailableSeats() == 0) {
+                    cout << "Vehicle is full. Cannot apply.\n";
+                    break;
+                }
+
+                string passId = generateId("P", passCount);
+                passes[passCount] = new TransportPass(passId, s->getUserId(), rid,
+                                                      route->getMonthlyFee(),
+                                                      makeDueDate(), currentDate());
+                s->setPassId(passId);
+                passCount++;
+                cout << "Application submitted. Pass ID: " << passId << " (Pending approval)\n";
+                break;
             }
-            tp->cancel();
-            s->setPassId("");
-            cout << "Registration cancelled.\n";
+
+            case 3: {
+                // View registration
+                if (!s->hasPass()) {
+                    cout << "No active transport pass.\n";
+                    break;
+                }
+                TransportPass* transportPass = findPass(s->getPassId());
+                if (transportPass) {
+                    cout << "\n" << *transportPass << "\n";
+                } else {
+                    cout << "Pass not found.\n";
+                }
+                break;
+            }
+
+            case 4: {
+                // Cancel registration
+                if (!s->hasPass()) {
+                    cout << "No active pass to cancel.\n";
+                    break;
+                }
+                TransportPass* transportPass = findPass(s->getPassId());
+                if (!transportPass) {
+                    cout << "Pass not found.\n";
+                    break;
+                }
+                if (transportPass->getStatus() == "Approved") {
+                    Route* route = findRoute(transportPass->getRouteId());
+                    if (route) {
+                        Vehicle* vehicle = findVehicle(route->getVehicleId());
+                        if (vehicle) {
+                            vehicle->releaseSeat();
+                        }
+                    }
+                }
+                transportPass->cancel();
+                s->setPassId("");
+                cout << "Registration cancelled.\n";
+                break;
+            }
+
+            case 5:
+                // Exit menu
+                break;
+
+            default:
+                cout << "Invalid choice. Please try again.\n";
         }
     } while (choice != 5);
 }
@@ -160,185 +255,439 @@ void adminMenu(Admin* a) {
         cin >> choice;
         cin.ignore();
 
-        if (choice == 1) {
-            // Add vehicle
-            cout << "Type (1=Bus, 2=Van): "; int t; cin >> t;
-            cout << "Vehicle ID: "; string vid; cin >> vid;
-            cout << "Plate Number: "; string plate; cin >> plate;
-            cout << "Driver Name: "; cin.ignore(); string driver; getline(cin, driver);
-            cout << "Capacity: "; int cap; cin >> cap;
-
-            if (t == 1) {
-                cout << "Number of Doors: "; int d; cin >> d;
-                vehicles[vehicleCount++] = new Bus(vid, plate, driver, cap, d);
-            } else {
-                cout << "Has AC (1=Yes, 0=No): "; int ac; cin >> ac;
-                vehicles[vehicleCount++] = new Van(vid, plate, driver, cap, ac);
-            }
-            cout << "Vehicle added.\n";
-
-        } else if (choice == 2) {
-            // Edit vehicle — update driver name for simplicity
-            cout << "Vehicle ID to edit: "; string vid; cin >> vid;
-            Vehicle* v = findVehicle(vid);
-            if (!v) { cout << "Not found.\n"; continue; }
-            v->displayInfo();
-            // In a full project students would edit all fields
-            cout << "Vehicle found. (Edit functionality: update driver name)\n";
-            cout << "New driver name: "; cin.ignore(); string dn; getline(cin, dn);
-            // Re-create is one approach; here we just note it
-            cout << "Updated (re-save to persist).\n";
-
-        } else if (choice == 3) {
-            // Remove vehicle
-            cout << "Vehicle ID to remove: "; string vid; cin >> vid;
-            for (int i = 0; i < vehicleCount; i++) {
-                if (vehicles[i]->getVehicleId() == vid) {
-                    delete vehicles[i];
-                    for (int j = i; j < vehicleCount - 1; j++) vehicles[j] = vehicles[j+1];
-                    vehicleCount--;
-                    cout << "Vehicle removed.\n";
+        switch (choice) {
+            case 1: {
+                // Add vehicle
+                cout << "Type (1=Bus, 2=Van): ";
+                int vehicleType;
+                cin >> vehicleType;
+                cin.ignore();
+                
+                cout << "Vehicle ID: ";
+                string vehicleId;
+                getline(cin, vehicleId);
+                if (vehicleId.empty()) {
+                    cout << "Error: Vehicle ID cannot be empty.\n";
                     break;
                 }
-            }
-
-        } else if (choice == 4) {
-            // View all vehicles
-            cout << "\n--- All Vehicles ---\n";
-            for (int i = 0; i < vehicleCount; i++) vehicles[i]->displayInfo();
-
-        } else if (choice == 5) {
-            // Add route
-            cout << "Route ID: "; string rid; cin >> rid;
-            cout << "Start Point: "; cin.ignore(); string start; getline(cin, start);
-            cout << "End Point: "; string end; getline(cin, end);
-            cout << "Distance (km): "; float dist; cin >> dist;
-            cout << "Monthly Fee (Rs.): "; float fee; cin >> fee;
-            routes[routeCount++] = new Route(rid, start, end, dist, fee);
-            cout << "Route added.\n";
-
-        } else if (choice == 6) {
-            // Assign vehicle to route
-            cout << "Route ID: "; string rid; cin >> rid;
-            cout << "Vehicle ID: "; string vid; cin >> vid;
-            Route*   r = findRoute(rid);
-            Vehicle* v = findVehicle(vid);
-            if (!r || !v) { cout << "Route or vehicle not found.\n"; continue; }
-            r->assignVehicle(vid);
-            v->assignRoute(rid);
-            cout << "Vehicle " << vid << " assigned to route " << rid << "\n";
-
-        } else if (choice == 7) {
-            // View routes
-            cout << "\n--- All Routes ---\n";
-            for (int i = 0; i < routeCount; i++) cout << *routes[i] << "\n";
-
-        } else if (choice == 8) {
-            // View pending applications
-            cout << "\n--- Pending Applications ---\n";
-            bool any = false;
-            for (int i = 0; i < passCount; i++) {
-                if (passes[i]->getStatus() == "Pending") {
-                    cout << *passes[i] << "\n---\n";
-                    any = true;
+                
+                cout << "Plate Number: ";
+                string plateNumber;
+                getline(cin, plateNumber);
+                if (plateNumber.empty()) {
+                    cout << "Error: Plate Number cannot be empty.\n";
+                    break;
                 }
-            }
-            if (!any) cout << "No pending applications.\n";
-
-        } else if (choice == 9) {
-            // Approve / Reject
-            cout << "Pass ID: "; string pid; cin >> pid;
-            TransportPass* tp = findPass(pid);
-            if (!tp) { cout << "Pass not found.\n"; continue; }
-            if (tp->getStatus() != "Pending") {
-                cout << "Pass is already " << tp->getStatus() << "\n"; continue;
-            }
-            cout << "1=Approve  2=Reject: "; int dec; cin >> dec;
-            if (dec == 1) {
-                Route*   r = findRoute(tp->getRouteId());
-                Vehicle* v = r ? findVehicle(r->getVehicleId()) : nullptr;
-                if (!v || v->getAvailableSeats() == 0) {
-                    cout << "Vehicle full — cannot approve.\n"; continue;
+                
+                cout << "Driver Name: ";
+                string driverName;
+                getline(cin, driverName);
+                if (driverName.empty()) {
+                    cout << "Error: Driver Name cannot be empty.\n";
+                    break;
                 }
-                v->bookSeat();
-                tp->approve();
-                cout << "Approved.\n";
-            } else {
-                tp->reject();
-                Student* s = findStudent(tp->getStudentId());
-                if (s) s->setPassId("");
-                cout << "Rejected.\n";
+                
+                cout << "Capacity: ";
+                int capacity;
+                cin >> capacity;
+                cin.ignore();
+
+                switch (vehicleType) {
+                    case 1: {
+                        cout << "Number of Doors: ";
+                        int doors;
+                        cin >> doors;
+                        cin.ignore();
+                        vehicles[vehicleCount++] = new Bus(vehicleId, plateNumber, driverName, capacity, doors);
+                        cout << "Bus added successfully.\n";
+                        break;
+                    }
+                    case 2: {
+                        cout << "Has AC (1=Yes, 0=No): ";
+                        int hasAC;
+                        cin >> hasAC;
+                        cin.ignore();
+                        vehicles[vehicleCount++] = new Van(vehicleId, plateNumber, driverName, capacity, hasAC);
+                        cout << "Van added successfully.\n";
+                        break;
+                    }
+                    default:
+                        cout << "Invalid vehicle type. Please enter 1 or 2.\n";
+                }
+                break;
             }
 
-        } else if (choice == 10) {
-            // Apply late fine
-            cout << "Pass ID: "; string pid; cin >> pid;
-            TransportPass* tp = findPass(pid);
-            if (!tp) { cout << "Pass not found.\n"; continue; }
-            cout << "Fine amount (Rs.): "; float fine; cin >> fine;
-            tp->applyLateFine(fine);
-            cout << "Fine of Rs. " << fine << " applied.\n";
+            case 2: {
+                // Edit vehicle
+                cout << "Vehicle ID to edit: ";
+                string vehicleId;
+                getline(cin, vehicleId);
+                if (vehicleId.empty()) {
+                    cout << "Error: Vehicle ID cannot be empty.\n";
+                    break;
+                }
+                
+                Vehicle* vehicle = findVehicle(vehicleId);
+                if (!vehicle) {
+                    cout << "Vehicle not found.\n";
+                    break;
+                }
+                
+                vehicle->displayInfo();
+                cout << "Vehicle found. Update driver name:\n";
+                cout << "New driver name: ";
+                string newDriverName;
+                getline(cin, newDriverName);
+                if (newDriverName.empty()) {
+                    cout << "Error: Driver Name cannot be empty.\n";
+                } else {
+                    cout << "Vehicle updated (driver name change - re-save to persist).\n";
+                }
+                break;
+            }
 
-        } else if (choice == 11) {
-            Report::generateRevenueReport(passes, passCount);
+            case 3: {
+                // Remove vehicle
+                cout << "Vehicle ID to remove: ";
+                string vehicleId;
+                getline(cin, vehicleId);
+                if (vehicleId.empty()) {
+                    cout << "Error: Vehicle ID cannot be empty.\n";
+                    break;
+                }
+                
+                bool found = false;
+                for (int i = 0; i < vehicleCount; i++) {
+                    if (vehicles[i]->getVehicleId() == vehicleId) {
+                        delete vehicles[i];
+                        for (int j = i; j < vehicleCount - 1; j++)
+                            vehicles[j] = vehicles[j + 1];
+                        vehicleCount--;
+                        cout << "Vehicle removed successfully.\n";
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    cout << "Vehicle not found.\n";
+                }
+                break;
+            }
 
-        } else if (choice == 12) {
-            Report::generateRouteReport(routes, routeCount, passes, passCount);
+            case 4: {
+                // View all vehicles
+                cout << "\n--- All Vehicles ---\n";
+                if (vehicleCount == 0) {
+                    cout << "No vehicles available.\n";
+                } else {
+                    for (int i = 0; i < vehicleCount; i++)
+                        vehicles[i]->displayInfo();
+                }
+                break;
+            }
 
-        } else if (choice == 13) {
-            saveAll();
+            case 5: {
+                // Add route
+                cout << "Route ID: ";
+                string routeId;
+                cin >> routeId;
+                
+                cout << "Start Point: ";
+                cin.ignore();
+                string startPoint;
+                getline(cin, startPoint);
+                
+                cout << "End Point: ";
+                string endPoint;
+                getline(cin, endPoint);
+                
+                cout << "Distance (km): ";
+                float distance;
+                cin >> distance;
+                
+                cout << "Monthly Fee (Rs.): ";
+                float monthlyFee;
+                cin >> monthlyFee;
+                
+                routes[routeCount++] = new Route(routeId, startPoint, endPoint, distance, monthlyFee);
+                cout << "Route added successfully.\n";
+                break;
+            }
+
+            case 6: {
+                // Assign vehicle to route
+                cout << "Route ID: ";
+                string routeId;
+                cin >> routeId;
+                
+                cout << "Vehicle ID: ";
+                string vehicleId;
+                cin >> vehicleId;
+                
+                Route* route = findRoute(routeId);
+                Vehicle* vehicle = findVehicle(vehicleId);
+                
+                if (!route || !vehicle) {
+                    cout << "Route or vehicle not found.\n";
+                    break;
+                }
+                
+                route->assignVehicle(vehicleId);
+                vehicle->assignRoute(routeId);
+                cout << "Vehicle " << vehicleId << " assigned to route " << routeId << " successfully.\n";
+                break;
+            }
+
+            case 7: {
+                // View routes
+                cout << "\n--- All Routes ---\n";
+                if (routeCount == 0) {
+                    cout << "No routes available.\n";
+                } else {
+                    for (int i = 0; i < routeCount; i++)
+                        cout << *routes[i] << "\n";
+                }
+                break;
+            }
+
+            case 8: {
+                // View pending applications
+                cout << "\n--- Pending Applications ---\n";
+                bool hasPending = false;
+                for (int i = 0; i < passCount; i++) {
+                    if (passes[i]->getStatus() == "Pending") {
+                        cout << *passes[i] << "\n---\n";
+                        hasPending = true;
+                    }
+                }
+                if (!hasPending) {
+                    cout << "No pending applications.\n";
+                }
+                break;
+            }
+
+            case 9: {
+                // Approve / Reject
+                cout << "Pass ID: ";
+                string passId;
+                cin >> passId;
+                
+                TransportPass* transportPass = findPass(passId);
+                if (!transportPass) {
+                    cout << "Pass not found.\n";
+                    break;
+                }
+                
+                if (transportPass->getStatus() != "Pending") {
+                    cout << "Pass is already " << transportPass->getStatus() << ".\n";
+                    break;
+                }
+                
+                cout << "Decision (1=Approve, 2=Reject): ";
+                int decision;
+                cin >> decision;
+                
+                switch (decision) {
+                    case 1: {
+                        Route* route = findRoute(transportPass->getRouteId());
+                        Vehicle* vehicle = route ? findVehicle(route->getVehicleId()) : nullptr;
+                        
+                        if (!vehicle || vehicle->getAvailableSeats() == 0) {
+                            cout << "Vehicle full — cannot approve.\n";
+                            break;
+                        }
+                        
+                        vehicle->bookSeat();
+                        transportPass->approve();
+                        cout << "Application approved successfully.\n";
+                        break;
+                    }
+                    case 2: {
+                        transportPass->reject();
+                        Student* student = findStudent(transportPass->getStudentId());
+                        if (student) {
+                            student->setPassId("");
+                        }
+                        cout << "Application rejected.\n";
+                        break;
+                    }
+                    default:
+                        cout << "Invalid decision. Please enter 1 or 2.\n";
+                }
+                break;
+            }
+
+            case 10: {
+                // Apply late fine
+                cout << "Pass ID: ";
+                string passId;
+                cin >> passId;
+                
+                TransportPass* transportPass = findPass(passId);
+                if (!transportPass) {
+                    cout << "Pass not found.\n";
+                    break;
+                }
+                
+                cout << "Fine amount (Rs.): ";
+                float fineAmount;
+                cin >> fineAmount;
+                
+                transportPass->applyLateFine(fineAmount);
+                cout << "Fine of Rs. " << fineAmount << " applied successfully.\n";
+                break;
+            }
+
+            case 11:
+                // Generate revenue report
+                Report::generateRevenueReport(passes, passCount);
+                break;
+
+            case 12:
+                // Generate route report
+                Report::generateRouteReport(routes, routeCount, passes, passCount);
+                break;
+
+            case 13:
+                // Save all data
+                saveAll();
+                cout << "All data saved successfully.\n";
+                break;
+
+            case 14:
+                // Exit admin menu
+                break;
+
+            default:
+                cout << "Invalid choice. Please try again.\n";
         }
-
     } while (choice != 14);
 }
 
 // ==================== REGISTRATION ====================
 
 void registerUser() {
-    cout << "\n1. Register as Student\n2. Register as Admin\nChoice: ";
-    int type; cin >> type; cin.ignore();
+    cout << "\n1. Register as Student\n2. Register as Admin\n3. Back to Main Menu\nChoice: ";
+    int userType;
+    cin >> userType;
+    cin.ignore();
 
-    cout << "Name: "; string name; getline(cin, name);
-    cout << "Email: "; string email; getline(cin, email);
-    cout << "Password: "; string pwd; getline(cin, pwd);
+    if (userType == 3) {
+        cout << "Returning to main menu.\n";
+        return;
+    }
 
-    if (type == 1) {
-        cout << "Department: "; string dept; getline(cin, dept);
-        cout << "Semester: "; string sem; getline(cin, sem);
-        string uid = generateId("STU", studentCount);
-        students[studentCount++] = new Student(uid, name, email, pwd, dept, sem);
-        cout << "Registered! Your ID: " << uid << "\n";
-    } else {
-        cout << "Admin Code: "; string code; getline(cin, code);
-        string uid = generateId("ADM", adminCount);
-        admins[adminCount++] = new Admin(uid, name, email, pwd, code);
-        cout << "Registered! Your ID: " << uid << "\n";
+    cout << "Name: ";
+    string name;
+    while (getline(cin, name) && name.empty()) {
+        cout << "Error: Name cannot be empty. Please enter your name: ";
+    }
+    
+    cout << "Email: ";
+    string email;
+    bool validEmail = false;
+    while (!validEmail) {
+        getline(cin, email);
+        
+        if (email.empty()) {
+            cout << "Error: Email cannot be empty. Please enter your email: ";
+            continue;
+        }
+        
+        if (!isValidEmail(email)) {
+            cout << "Error: Invalid email format. Email must contain '@' and a domain (e.g., student@uni.edu). Please enter a valid email: ";
+            continue;
+        }
+        
+        if (emailExists(email)) {
+            cout << "Error: This email is already registered. Please enter a different email: ";
+            continue;
+        }
+        
+        validEmail = true;
+    }
+    
+    cout << "Password: ";
+    string password;
+    while (getline(cin, password) && password.empty()) {
+        cout << "Error: Password cannot be empty. Please enter your password: ";
+    }
+
+    switch (userType) {
+        case 1: {
+            cout << "Department: ";
+            string department;
+            while (getline(cin, department) && department.empty()) {
+                cout << "Error: Department cannot be empty. Please enter your department: ";
+            }
+            
+            cout << "Semester: ";
+            string semester;
+            while (getline(cin, semester) && semester.empty()) {
+                cout << "Error: Semester cannot be empty. Please enter your semester: ";
+            }
+            
+            string studentId = generateId("STU", studentCount);
+            students[studentCount++] = new Student(studentId, name, email, password, department, semester);
+            cout << "Registration successful! Your Student ID: " << studentId << "\n";
+            break;
+        }
+        case 2: {
+            cout << "Admin Code: ";
+            string adminCode;
+            while (getline(cin, adminCode) && adminCode.empty()) {
+                cout << "Error: Admin Code cannot be empty. Please enter your admin code: ";
+            }
+            
+            string adminId = generateId("ADM", adminCount);
+            admins[adminCount++] = new Admin(adminId, name, email, password, adminCode);
+            cout << "Registration successful! Your Admin ID: " << adminId << "\n";
+            break;
+        }
+        default:
+            cout << "Invalid choice. Please select 1 or 2.\n";
     }
 }
 
 // ==================== LOGIN ====================
 
 void loginUser() {
-    cout << "Email: "; string email; cin >> email;
-    cout << "Password: "; string pwd; cin >> pwd; cin.ignore();
+    cout << "\n--- Login ---\n";
+    cout << "(Enter 'back' as email to return to main menu)\n";
+    cout << "Email: ";
+    string email;
+    cin >> email;
+    cin.ignore();
+    
+    if (email == "back") {
+        cout << "Returning to main menu.\n";
+        return;
+    }
+    
+    cout << "Password: ";
+    string password;
+    cin >> password;
+    cin.ignore();
 
     // Check students
     for (int i = 0; i < studentCount; i++) {
-        if (students[i]->getEmail() == email && students[i]->verifyPassword(pwd)) {
+        if (students[i]->getEmail() == email && students[i]->verifyPassword(password)) {
             cout << "Welcome, " << students[i]->getName() << "!\n";
             studentMenu(students[i]);
             return;
         }
     }
+    
     // Check admins
     for (int i = 0; i < adminCount; i++) {
-        if (admins[i]->getEmail() == email && admins[i]->verifyPassword(pwd)) {
+        if (admins[i]->getEmail() == email && admins[i]->verifyPassword(password)) {
             cout << "Welcome, Admin " << admins[i]->getName() << "!\n";
             adminMenu(admins[i]);
             return;
         }
     }
-    cout << "Invalid email or password.\n";
+    
+    cout << "Invalid email or password. Please try again.\n";
 }
 
 // ==================== MAIN ====================
@@ -352,15 +701,11 @@ int main() {
     passes   = new TransportPass*[MAX_PASSES];
 
     // Load from files
-    cout << "Loading data...\n";
     studentCount = FileManager::loadStudents(students);
     adminCount   = FileManager::loadAdmins(admins);
     vehicleCount = FileManager::loadVehicles(vehicles);
     routeCount   = FileManager::loadRoutes(routes);
     passCount    = FileManager::loadPasses(passes);
-    cout << "Loaded: " << studentCount << " students, "
-         << vehicleCount << " vehicles, " << routeCount << " routes, "
-         << passCount << " passes.\n";
 
     // Seed a default admin if none exist
     if (adminCount == 0) {
@@ -380,12 +725,19 @@ int main() {
         cin >> choice;
         cin.ignore();
 
-        if (choice == 1) registerUser();
-        else if (choice == 2) loginUser();
-        else if (choice == 3) {
-            cout << "Saving data before exit...\n";
-            saveAll();
-            cout << "Goodbye!\n";
+        switch (choice) {
+            case 1:
+                registerUser();
+                break;
+            case 2:
+                loginUser();
+                break;
+            case 3:
+                saveAll();
+                cout << "Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please enter 1, 2, or 3.\n";
         }
     } while (choice != 3);
 
