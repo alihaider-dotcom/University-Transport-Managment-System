@@ -1,0 +1,245 @@
+<svg width="940" height="750" xmlns="http://www.w3.org/2000/svg" font-size="11" font-family="monospace">
+ <defs>
+  <marker orient="auto" markerHeight="10" markerWidth="10" refY="6" refX="11" viewBox="0 0 12 12" id="inh">
+   <path id="svg_1" stroke-width="1.2" stroke="#534AB7" fill="white" d="m1,1l10,5l-10,5l0,-10z"/>
+  </marker>
+  <marker orient="auto" markerHeight="10" markerWidth="10" refY="6" refX="11" viewBox="0 0 12 12" id="inh2">
+   <path id="svg_2" stroke-width="1.2" stroke="#0F6E56" fill="white" d="m1,1l10,5l-10,5l0,-10z"/>
+  </marker>
+  <marker orient="auto" markerHeight="10" markerWidth="12" refY="5" refX="1" viewBox="0 0 14 10" id="comp">
+   <path id="svg_3" stroke="#185FA5" fill="#185FA5" d="m7,1l6,4l-6,4l-6,-4l6,-4z"/>
+  </marker>
+  <marker orient="auto" markerHeight="10" markerWidth="12" refY="5" refX="1" viewBox="0 0 14 10" id="agg">
+   <path id="svg_4" stroke-width="1.2" stroke="#BA7517" fill="white" d="m7,1l6,4l-6,4l-6,-4l6,-4z"/>
+  </marker>
+  <marker orient="auto" markerHeight="8" markerWidth="8" refY="5" refX="8" viewBox="0 0 10 10" id="assoc">
+   <path id="svg_5" stroke-linecap="round" stroke-width="1.5" stroke="#639922" fill="none" d="m1,1l8,4l-8,4"/>
+  </marker>
+ </defs>
+ <!-- Background -->
+ <!-- Title -->
+ <!-- ══════════════ RELATIONSHIPS ══════════════ -->
+ <!-- Inheritance: Student → User -->
+ <!-- Inheritance: Admin → User -->
+ <!-- Inheritance: Bus → Vehicle -->
+ <!-- Inheritance: Van → Vehicle -->
+ <!-- Composition: TransportPass → Bill -->
+ <!-- Aggregation: TransportManager → Vehicle -->
+ <!-- Aggregation: TransportManager → Route -->
+ <!-- Association: Student → TransportPass -->
+ <!-- ══════════════ USER (abstract) ══════════════ -->
+ <!-- ══════════════ STUDENT ══════════════ -->
+ <!-- ══════════════ ADMIN ══════════════ -->
+ <!-- ══════════════ VEHICLE (abstract) ══════════════ -->
+ <!-- ══════════════ BUS ══════════════ -->
+ <!-- ══════════════ VAN ══════════════ -->
+ <!-- ══════════════ ROUTE ══════════════ -->
+ <!-- ══════════════ TRANSPORTPASS ══════════════ -->
+ <!-- ══════════════ BILL ══════════════ -->
+ <!-- ══════════════ TRANSPORTMANAGER ══════════════ -->
+ <!-- ══════════════ DATASTORE<T> ══════════════ -->
+ <!-- ══════════════ REPORT ══════════════ -->
+ <!-- ══════════════ RELATIONSHIP LABELS ══════════════ -->
+ <!-- ══════════════ LEGEND ══════════════ -->
+ <g>
+  <title>Layer 1</title>
+  <text id="svg_7" font-family="Arial, sans-serif" fill="#2C2C2A" font-weight="bold" font-size="15" text-anchor="middle" y="24.41667" x="470">University Transport Management and Billing System — UML Class Diagram</text>
+  <line id="svg_8" stroke-width="0.8" stroke="#D3D1C7" y2="40" x2="930" y1="40" x1="10"/>
+  <line stroke="#534AB7" id="svg_9" marker-end="url(#inh)" stroke-width="1.5" y2="168.58314" x2="192.43143" y1="267.12482" x1="114.26475"/>
+  <line stroke="#534AB7" id="svg_10" marker-end="url(#inh)" stroke-width="1.5" y2="167.54148" x2="243.47308" y1="268.16649" x1="317.47309"/>
+  <line stroke="#0F6E56" id="svg_11" marker-end="url(#inh2)" stroke-width="1.5" y2="198.62481" x2="704.63975" y1="263.99981" x1="634.63973"/>
+  <line stroke="#0F6E56" id="svg_12" marker-end="url(#inh2)" stroke-width="1.5" y2="199.66647" x2="748.38976" y1="262.95814" x1="816.30643"/>
+  <line id="svg_13" marker-start="url(#comp)" stroke-width="1.5" stroke="#185FA5" y2="587.7273" x2="151.17645" y1="567.7273" x1="151.17645"/>
+  <path transform="rotate(-12 732.718 295.364)" id="svg_14" d="m712.65421,395.06071l40.12684,-199.39289" marker-start="url(#agg)" opacity="undefined" stroke-dasharray="5 3" stroke-width="1.5" stroke="#BA7517"/>
+  <path stroke="#BA7517" id="svg_15" d="m622.5981,455.37482l-79.04393,0.29163" marker-start="url(#agg)" opacity="undefined" stroke-dasharray="5 3" stroke-width="1.5"/>
+  <line stroke="#639922" id="svg_16" marker-end="url(#assoc)" stroke-dasharray="4 3" stroke-width="1.5" y2="428.43561" x2="136.76459" y1="365.12482" x1="125.13479"/>
+  <g stroke="null" id="class-user">
+   <rect stroke="#534AB7" id="svg_17" stroke-width="1.2" fill="#EEEDFE" rx="4" height="114.49" width="220" y="51.62481" x="113.47309"/>
+   <rect stroke="null" id="svg_18" fill="#534AB7" rx="4" height="23.90592" width="220" y="51.62481" x="113.47309"/>
+   <rect stroke="null" id="svg_19" fill="#534AB7" height="8.69306" width="220" y="66.83767" x="113.47309"/>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_20" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="75.50414" x="223.47309">«abstract» User</text>
+   <line stroke="#534AB7" id="svg_21" stroke-width="0.8" y2="75.53073" x2="333.47309" y1="75.53073" x1="113.47309"/>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_22" fill="#3C3489" y="95.50414" x="121.47309">- userId : string</text>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_23" fill="#3C3489" y="107.50414" x="121.47309">- name : string</text>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_24" fill="#3C3489" y="119.50414" x="121.47309">- email : string</text>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_25" fill="#3C3489" y="131.50414" x="121.47309">- password : string</text>
+   <line stroke="#534AB7" id="svg_26" stroke-dasharray="3 2" stroke-width="0.5" y2="134.2089" x2="333.47309" y1="134.2089" x1="113.47309"/>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_27" fill="#3C3489" y="149.50414" x="121.47309">+ verifyPassword()</text>
+   <text transform="matrix(1 0 0 1.08663 0 -14.1211)" stroke="null" id="svg_28" fill="#3C3489" y="161.50414" x="121.47309">+ serialize()</text>
+  </g>
+  <g id="class-student">
+   <rect id="svg_29" stroke-width="1.2" stroke="#534AB7" fill="#EEEDFE" rx="4" height="98" width="180" y="266.08315" x="41.97309"/>
+   <rect id="svg_30" fill="#534AB7" rx="4" height="22" width="180" y="266.08315" x="41.97309"/>
+   <rect id="svg_31" fill="#534AB7" height="8" width="180" y="280.08315" x="41.97309"/>
+   <text id="svg_32" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="281.08315" x="131.97309">Student</text>
+   <line id="svg_33" stroke-width="0.8" stroke="#534AB7" y2="288.08315" x2="221.97309" y1="288.08315" x1="41.97309"/>
+   <text id="svg_34" fill="#3C3489" y="301.08315" x="49.97309">- department : string</text>
+   <text id="svg_35" fill="#3C3489" y="313.08315" x="49.97309">- semester : int</text>
+   <text id="svg_36" fill="#3C3489" y="325.08315" x="49.97309">- passId : string</text>
+   <line id="svg_37" stroke-dasharray="3 2" stroke-width="0.5" stroke="#534AB7" y2="330.08315" x2="221.97309" y1="330.08315" x1="41.97309"/>
+   <text id="svg_38" fill="#3C3489" y="343.08315" x="49.97309">+ displayMenu()</text>
+   <text id="svg_39" fill="#3C3489" y="355.08315" x="49.97309">+ hasPass() : bool</text>
+  </g>
+  <g id="class-admin">
+   <rect id="svg_40" stroke-width="1.2" stroke="#534AB7" fill="#EEEDFE" rx="4" height="98" width="160" y="268.16649" x="249.97309"/>
+   <rect id="svg_41" fill="#534AB7" rx="4" height="22" width="160" y="268.16649" x="249.97309"/>
+   <rect id="svg_42" fill="#534AB7" height="8" width="160" y="282.16649" x="249.97309"/>
+   <text id="svg_43" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="283.16649" x="329.97309">Admin</text>
+   <line id="svg_44" stroke-width="0.8" stroke="#534AB7" y2="290.16649" x2="409.97309" y1="290.16649" x1="249.97309"/>
+   <text id="svg_45" fill="#3C3489" y="303.16649" x="257.97309">- adminCode : string</text>
+   <line id="svg_46" stroke-dasharray="3 2" stroke-width="0.5" stroke="#534AB7" y2="308.16649" x2="409.97309" y1="308.16649" x1="249.97309"/>
+   <text id="svg_47" fill="#3C3489" y="321.16649" x="257.97309">+ displayMenu()</text>
+   <text id="svg_48" fill="#3C3489" y="333.16649" x="257.97309">+ displayInfo()</text>
+   <text id="svg_49" fill="#3C3489" y="345.16649" x="257.97309">+ verifyAdminCode()</text>
+   <text id="svg_50" fill="#3C3489" y="357.16649" x="257.97309">+ manageUsers()</text>
+  </g>
+  <g id="class-vehicle">
+   <rect id="svg_51" stroke-width="1.2" stroke="#0F6E56" fill="#E1F5EE" rx="4" height="144" width="220" y="51.49981" x="622.76476"/>
+   <rect id="svg_52" fill="#0F6E56" rx="4" height="22" width="220" y="51.49981" x="622.76476"/>
+   <rect id="svg_53" fill="#0F6E56" height="8" width="220" y="65.49981" x="622.76476"/>
+   <text id="svg_54" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="66.49981" x="732.76476">«abstract» Vehicle</text>
+   <line id="svg_55" stroke-width="0.8" stroke="#0F6E56" y2="73.49981" x2="842.76476" y1="73.49981" x1="622.76476"/>
+   <text id="svg_56" fill="#085041" y="86.49981" x="630.76476">- vehicleId : string</text>
+   <text id="svg_57" fill="#085041" y="98.49981" x="630.76476">- plateNumber : string</text>
+   <text id="svg_58" fill="#085041" y="110.49981" x="630.76476">- routeId : string</text>
+   <text id="svg_59" fill="#085041" y="122.49981" x="630.76476">- capacity : int</text>
+   <text id="svg_60" fill="#085041" y="134.49981" x="630.76476">- seatsOccupied : int</text>
+   <line id="svg_61" stroke-dasharray="3 2" stroke-width="0.5" stroke="#0F6E56" y2="139.49981" x2="842.76476" y1="139.49981" x1="622.76476"/>
+   <text id="svg_62" fill="#085041" y="152.49981" x="630.76476">+ bookSeat()</text>
+   <text id="svg_63" fill="#085041" y="164.49981" x="630.76476">+ releaseSeat()</text>
+   <text id="svg_64" fill="#085041" y="176.49981" x="630.76476">+ getAvailableSeats()</text>
+   <text id="svg_65" fill="#085041" y="188.49981" x="630.76476">+ displayInfo()  «pure»</text>
+  </g>
+  <g id="class-bus">
+   <rect id="svg_66" stroke-width="1.2" stroke="#0F6E56" fill="#E1F5EE" rx="4" height="86" width="160" y="265.04147" x="546.13975"/>
+   <rect id="svg_67" fill="#0F6E56" rx="4" height="22" width="160" y="265.04147" x="546.13975"/>
+   <rect id="svg_68" fill="#0F6E56" height="8" width="160" y="279.04147" x="546.13975"/>
+   <text id="svg_69" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="280.04147" x="626.13975">Bus</text>
+   <line id="svg_70" stroke-width="0.8" stroke="#0F6E56" y2="287.04147" x2="706.13975" y1="287.04147" x1="546.13975"/>
+   <text id="svg_71" fill="#085041" y="300.04147" x="554.13975">- numberOfDoors : int</text>
+   <line id="svg_72" stroke-dasharray="3 2" stroke-width="0.5" stroke="#0F6E56" y2="305.04147" x2="706.13975" y1="305.04147" x1="546.13975"/>
+   <text id="svg_73" fill="#085041" y="318.04147" x="554.13975">+ displayInfo()</text>
+   <text id="svg_74" fill="#085041" y="330.04147" x="554.13975">+ getType() → "Bus"</text>
+   <text id="svg_75" fill="#085041" y="342.04147" x="554.13975">+ getNumberOfDoors()</text>
+  </g>
+  <g id="class-van">
+   <rect id="svg_76" stroke-width="1.2" stroke="#0F6E56" fill="#E1F5EE" rx="4" height="86" width="160" y="263.99981" x="767.3481"/>
+   <rect id="svg_77" fill="#0F6E56" rx="4" height="22" width="160" y="263.99981" x="767.3481"/>
+   <rect id="svg_78" fill="#0F6E56" height="8" width="160" y="277.99981" x="767.3481"/>
+   <text id="svg_79" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="278.99981" x="847.3481">Van</text>
+   <line id="svg_80" stroke-width="0.8" stroke="#0F6E56" y2="285.99981" x2="927.3481" y1="285.99981" x1="767.3481"/>
+   <text id="svg_81" fill="#085041" y="298.99981" x="775.3481">- hasAC : bool</text>
+   <line id="svg_82" stroke-dasharray="3 2" stroke-width="0.5" stroke="#0F6E56" y2="303.99981" x2="927.3481" y1="303.99981" x1="767.3481"/>
+   <text id="svg_83" fill="#085041" y="316.99981" x="775.3481">+ displayInfo()</text>
+   <text id="svg_84" fill="#085041" y="328.99981" x="775.3481">+ getType() → "Van"</text>
+   <text id="svg_85" fill="#085041" y="340.99981" x="775.3481">+ hasACSupport()</text>
+  </g>
+  <g id="class-route">
+   <rect id="svg_86" stroke-width="1.2" stroke="#185FA5" fill="#E6F1FB" rx="4" height="120" width="200" y="398.16647" x="347.3532"/>
+   <rect id="svg_87" fill="#185FA5" rx="4" height="22" width="200" y="398.16647" x="347.3532"/>
+   <rect id="svg_88" fill="#185FA5" height="8" width="200" y="412.16647" x="347.3532"/>
+   <text id="svg_89" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="413.16647" x="447.3532">Route</text>
+   <line id="svg_90" stroke-width="0.8" stroke="#185FA5" y2="420.16647" x2="547.3532" y1="420.16647" x1="347.3532"/>
+   <text id="svg_91" fill="#0C447C" y="433.16647" x="355.3532">- routeId : string</text>
+   <text id="svg_92" fill="#0C447C" y="445.16647" x="355.3532">- startPoint : string</text>
+   <text id="svg_93" fill="#0C447C" y="457.16647" x="355.3532">- endPoint : string</text>
+   <text id="svg_94" fill="#0C447C" y="469.16647" x="355.3532">- distanceKm : float</text>
+   <text id="svg_95" fill="#0C447C" y="481.16647" x="355.3532">- monthlyFee : float</text>
+   <text id="svg_96" fill="#0C447C" y="493.16647" x="355.3532">- assignedVehicleId : string</text>
+   <line id="svg_97" stroke-dasharray="3 2" stroke-width="0.5" stroke="#185FA5" y2="498.16647" x2="547.3532" y1="498.16647" x1="347.3532"/>
+   <text id="svg_98" fill="#0C447C" y="511.16647" x="355.3532">+ assignVehicle(id)</text>
+  </g>
+  <g id="class-transportpass">
+   <rect id="svg_99" stroke-width="1.2" stroke="#993C1D" fill="#FAECE7" rx="4" height="132" width="240" y="433.64397" x="32.21812"/>
+   <rect id="svg_100" fill="#D85A30" rx="4" height="22" width="240" y="433.64397" x="32.21812"/>
+   <rect id="svg_101" fill="#D85A30" height="8" width="240" y="447.64397" x="32.21812"/>
+   <text id="svg_102" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="448.64397" x="152.21812">TransportPass</text>
+   <line id="svg_103" stroke-width="0.8" stroke="#993C1D" y2="455.64397" x2="272.21812" y1="455.64397" x1="32.21812"/>
+   <text id="svg_104" fill="#712B13" y="468.64397" x="40.21812">- passId : string</text>
+   <text id="svg_105" fill="#712B13" y="480.64397" x="40.21812">- studentId : string</text>
+   <text id="svg_106" fill="#712B13" y="492.64397" x="40.21812">- routeId : string</text>
+   <text id="svg_107" fill="#712B13" y="504.64397" x="40.21812">- status : string</text>
+   <text id="svg_108" fill="#712B13" y="516.64397" x="40.21812">- bill : Bill  «composition»</text>
+   <line id="svg_109" stroke-dasharray="3 2" stroke-width="0.5" stroke="#993C1D" y2="521.64397" x2="272.21812" y1="521.64397" x1="32.21812"/>
+   <text id="svg_110" fill="#712B13" y="534.64397" x="40.21812">+ approve()</text>
+   <text id="svg_111" fill="#712B13" y="546.64397" x="40.21812">+ reject()</text>
+   <text id="svg_112" fill="#712B13" y="558.64397" x="40.21812">+ applyLateFine()</text>
+  </g>
+  <g id="class-bill">
+   <rect id="svg_113" stroke-width="1.2" stroke="#993C1D" fill="#FAECE7" rx="4" height="120" width="240" y="587.7273" x="31.17645"/>
+   <rect id="svg_114" fill="#D85A30" rx="4" height="22" width="240" y="587.7273" x="31.17645"/>
+   <rect id="svg_115" fill="#D85A30" height="8" width="240" y="601.7273" x="31.17645"/>
+   <text id="svg_116" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="602.7273" x="151.17645">Bill</text>
+   <line id="svg_117" stroke-width="0.8" stroke="#993C1D" y2="609.7273" x2="271.17645" y1="609.7273" x1="31.17645"/>
+   <text id="svg_118" fill="#712B13" y="622.7273" x="39.17645">- baseFee : float</text>
+   <text id="svg_119" fill="#712B13" y="634.7273" x="39.17645">- lateFine : float</text>
+   <text id="svg_120" fill="#712B13" y="646.7273" x="39.17645">- isPaid : bool</text>
+   <text id="svg_121" fill="#712B13" y="658.7273" x="39.17645">- dueDate : string</text>
+   <text id="svg_122" fill="#712B13" y="670.7273" x="39.17645">- issueDate : string</text>
+   <line id="svg_123" stroke-dasharray="3 2" stroke-width="0.5" stroke="#993C1D" y2="675.7273" x2="271.17645" y1="675.7273" x1="31.17645"/>
+   <text id="svg_124" fill="#712B13" y="688.7273" x="39.17645">+ markPaid()</text>
+   <text id="svg_125" fill="#712B13" y="700.7273" x="39.17645">+ getTotalAmount()</text>
+  </g>
+  <g id="class-transportmanager">
+   <rect id="svg_126" stroke-width="1.2" stroke="#BA7517" fill="#FAEEDA" rx="4" height="110" width="220" y="399.08314" x="624.76477"/>
+   <rect id="svg_127" fill="#BA7517" rx="4" height="22" width="220" y="399.08314" x="624.76477"/>
+   <rect id="svg_128" fill="#BA7517" height="8" width="220" y="413.08314" x="624.76477"/>
+   <text id="svg_129" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="414.08314" x="734.76477">TransportManager</text>
+   <line id="svg_130" stroke-width="0.8" stroke="#BA7517" y2="421.08314" x2="844.76477" y1="421.08314" x1="624.76477"/>
+   <text id="svg_131" fill="#633806" y="434.08314" x="632.76477">- vehicles : Vehicle**</text>
+   <text id="svg_132" fill="#633806" y="446.08314" x="632.76477">- routes : Route**</text>
+   <text id="svg_133" fill="#633806" y="458.08314" x="632.76477">- vehicleCount : int</text>
+   <text id="svg_134" fill="#633806" y="470.08314" x="632.76477">- routeCount : int</text>
+   <line id="svg_135" stroke-dasharray="3 2" stroke-width="0.5" stroke="#BA7517" y2="475.08314" x2="844.76477" y1="475.08314" x1="624.76477"/>
+   <text id="svg_136" fill="#633806" y="488.08314" x="632.76477">+ addVehicle()</text>
+   <text id="svg_137" fill="#633806" y="500.08314" x="632.76477">+ assignVehicleToRoute()</text>
+  </g>
+  <g id="class-datastore">
+   <rect id="svg_138" stroke-width="1.2" stroke="#5F5E5A" fill="#F1EFE8" rx="4" height="120" width="220" y="530.3625" x="705.28235"/>
+   <rect id="svg_139" fill="#5F5E5A" rx="4" height="22" width="220" y="530.3625" x="705.28235"/>
+   <rect id="svg_140" fill="#5F5E5A" height="8" width="220" y="544.3625" x="705.28235"/>
+   <text id="svg_141" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="545.3625" x="815.28235">«template» DataStore&lt;T&gt;</text>
+   <line id="svg_142" stroke-width="0.8" stroke="#5F5E5A" y2="552.3625" x2="925.28235" y1="552.3625" x1="705.28235"/>
+   <text id="svg_143" fill="#2C2C2A" y="565.3625" x="713.28235">- data : T**</text>
+   <text id="svg_144" fill="#2C2C2A" y="577.3625" x="713.28235">- count : int</text>
+   <text id="svg_145" fill="#2C2C2A" y="589.3625" x="713.28235">- capacity : int</text>
+   <line id="svg_146" stroke-dasharray="3 2" stroke-width="0.5" stroke="#5F5E5A" y2="594.3625" x2="925.28235" y1="594.3625" x1="705.28235"/>
+   <text id="svg_147" fill="#2C2C2A" y="607.3625" x="713.28235">+ add(T*)</text>
+   <text id="svg_148" fill="#2C2C2A" y="619.3625" x="713.28235">+ removeById(id)</text>
+   <text id="svg_149" fill="#2C2C2A" y="631.3625" x="713.28235">+ findById(id)</text>
+   <text id="svg_150" fill="#2C2C2A" y="643.3625" x="713.28235">+ operator[]()</text>
+  </g>
+  <g id="class-report">
+   <rect id="svg_151" stroke-width="1.2" stroke="#5F5E5A" fill="#F1EFE8" rx="4" height="100" width="220" y="535.32507" x="458.34479"/>
+   <rect id="svg_152" fill="#5F5E5A" rx="4" height="22" width="220" y="535.32507" x="458.34479"/>
+   <rect id="svg_153" fill="#5F5E5A" height="8" width="220" y="549.32507" x="458.34479"/>
+   <text id="svg_154" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" y="550.32507" x="568.34479">Report  «utility»</text>
+   <line id="svg_155" stroke-width="0.8" stroke="#5F5E5A" y2="557.32507" x2="678.34479" y1="557.32507" x1="458.34479"/>
+   <text id="svg_156" fill="#2C2C2A" y="570.32507" x="466.34479">«static methods only»</text>
+   <line id="svg_157" stroke-dasharray="3 2" stroke-width="0.5" stroke="#5F5E5A" y2="575.32507" x2="678.34479" y1="575.32507" x1="458.34479"/>
+   <text id="svg_158" fill="#2C2C2A" y="588.32507" x="466.34479">+ generateRevenueReport()</text>
+   <text id="svg_159" fill="#2C2C2A" y="600.32507" x="466.34479">+ generateRouteReport()</text>
+   <text id="svg_160" fill="#2C2C2A" y="612.32507" x="466.34479">+ displayBusyRoutes()</text>
+  </g>
+  <text id="svg_161" font-family="Arial, sans-serif" fill="#534AB7" font-size="9" y="216.41648" x="121.55642">inherits</text>
+  <text id="svg_162" font-family="Arial, sans-serif" fill="#534AB7" font-size="9" y="217.45815" x="282.80643">inherits</text>
+  <text id="svg_163" font-family="Arial, sans-serif" fill="#0F6E56" font-size="9" y="216.29146" x="644.88975">inherits</text>
+  <text id="svg_164" font-family="Arial, sans-serif" fill="#0F6E56" font-size="9" y="217.33313" x="772.18142">inherits</text>
+  <text id="svg_165" font-family="Arial, sans-serif" fill="#185FA5" font-size="9" y="580.8523" x="165.96812">«composition»</text>
+  <text id="svg_166" font-family="Arial, sans-serif" fill="#639922" font-size="9" y="392.07788" x="145.23292">«association»</text>
+  <text id="svg_167" font-family="Arial, sans-serif" fill="#BA7517" font-size="9" y="378.49981" x="673.63975">«aggregates»</text>
+  <text stroke="null" id="svg_168" font-family="Arial, sans-serif" fill="#BA7517" font-size="9" y="448.08314" x="550.9928">«aggregates»</text>
+  <g id="legend">
+   <rect stroke="#B4B2A9" id="svg_169" stroke-width="0.8" fill="white" rx="6" height="60" width="280" y="646.66122" x="316.71825"/>
+   <text id="svg_170" font-family="Arial, sans-serif" font-weight="bold" fill="#444441" font-size="10" y="659.61955" x="329.84325">Legend</text>
+   <line id="svg_171" marker-end="url(#inh)" stroke-width="1.5" stroke="#534AB7" y2="671.61955" x2="361.84325" y1="671.61955" x1="329.84325"/>
+   <text id="svg_172" font-family="Arial, sans-serif" fill="#444441" font-size="10" y="675.61955" x="367.84325">Inheritance (hollow △)</text>
+   <line id="svg_173" marker-start="url(#comp)" stroke-width="1.5" stroke="#185FA5" y2="689.61955" x2="361.84325" y1="689.61955" x1="329.84325"/>
+   <text id="svg_174" font-family="Arial, sans-serif" fill="#444441" font-size="10" y="693.61955" x="367.84325">Composition (filled ◆)</text>
+   <line id="svg_175" marker-start="url(#agg)" stroke-dasharray="5 3" stroke-width="1.5" stroke="#BA7517" y2="671.61955" x2="501.84325" y1="671.61955" x1="469.84325"/>
+   <text id="svg_176" font-family="Arial, sans-serif" fill="#444441" font-size="10" y="675.61955" x="507.84325">Aggregation (◇)</text>
+   <line id="svg_177" marker-end="url(#assoc)" stroke-dasharray="4 3" stroke-width="1.5" stroke="#639922" y2="689.61955" x2="501.84325" y1="689.61955" x1="469.84325"/>
+   <text id="svg_178" font-family="Arial, sans-serif" fill="#444441" font-size="10" y="693.61955" x="507.84325">Association (→)</text>
+  </g>
+ </g>
+</svg>
